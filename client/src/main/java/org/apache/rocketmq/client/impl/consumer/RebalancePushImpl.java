@@ -151,7 +151,8 @@ public class RebalancePushImpl extends RebalanceImpl {
                 if (lastOffset >= 0) {
                     result = lastOffset;
                 }
-                // First start,no offset
+                // 1. no offset when start firstly
+                // 2. get offset failed when broker restart
                 else if (-1 == lastOffset) {
                     if (mq.getTopic().startsWith(MixAll.RETRY_GROUP_TOPIC_PREFIX)) {
                         result = 0L;

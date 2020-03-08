@@ -279,6 +279,12 @@ public class DefaultMQPushConsumerImpl implements MQConsumerInner {
                             pullRequest, offset);
                     }
 
+                    if (offset < 0) {
+                        this.executePullRequestLater(pullRequest, pullTimeDelayMillsWhenException);
+                        log.info("pull message later because get offset < 0, {}", pullRequest);
+                        return;
+                    }
+
                     pullRequest.setLockedFirst(true);
                     pullRequest.setNextOffset(offset);
                 }
